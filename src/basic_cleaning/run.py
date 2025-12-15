@@ -7,6 +7,8 @@ import logging
 import wandb
 import pandas as pd
 
+run = wandb.init(project="nyc_airbnb", job_type="basic_cleaning")
+
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -37,10 +39,10 @@ def go(args):
 
     # log the new data.
     artifact = wandb.Artifact(
-     args.output_artifact,
-     type=args.output_type,
-     description=args.output_description,
- )
+        args.output_artifact,
+        type=args.output_type,
+        description=args.output_description,
+    )
     artifact.add_file("clean_sample.csv")
     run.log_artifact(artifact)
 
@@ -50,49 +52,48 @@ def go(args):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="A very basic data cleaning")
-  
+
     parser.add_argument(
         "--input_artifact", 
-        type = ## INSERT TYPE HERE: str, float or int,
-        help = ## INSERT DESCRIPTION HERE,
+        type = str,
+        help = "Name of the input artifact to be cleaned (e.g., sample.csv)",
         required = True
     )
 
     parser.add_argument(
         "--output_artifact", 
-        type = ## INSERT TYPE HERE: str, float or int,
-        help = ## INSERT DESCRIPTION HERE,
+        type = str,
+        help = "Name for the output artifact containing the cleaned data (e.g., clean_sample.csv)",
         required = True
     )
 
     parser.add_argument(
         "--output_type", 
-        type = ## INSERT TYPE HERE: str, float or int,
-        help = ## INSERT DESCRIPTION HERE,
+        type = str,
+        help = "Type of the output artifact (e.g., dataset)",
         required = True
     )
 
     parser.add_argument(
         "--output_description", 
-        type = ## INSERT TYPE HERE: str, float or int,
-        help = ## INSERT DESCRIPTION HERE,
+        type = str,
+        help = "Description of the output artifact (e.g., cleaned dataset with outliers removed)",
         required = True
     )
 
     parser.add_argument(
         "--min_price", 
-        type = ## INSERT TYPE HERE: str, float or int,
-        help = ## INSERT DESCRIPTION HERE,
+        type = float,
+        help = "Minimum price threshold to keep in the dataset",
         required = True
     )
 
     parser.add_argument(
         "--max_price",
-        type = ## INSERT TYPE HERE: str, float or int,
-        help = ## INSERT DESCRIPTION HERE,
+        type = float,
+        help = "Maximum price threshold to keep in the dataset",
         required = True
-    )
-
+    )    
 
     args = parser.parse_args()
 
